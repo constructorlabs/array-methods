@@ -2,7 +2,7 @@ function removeMiddle( words ){
   // words is an array which contains an odd number of strings
   // return a new array containing only the middle word
   // the words array should no longer contain the middle word
-
+  return words.splice(Math.floor(words.length/2),1);
   // hint: use splice
 }
 
@@ -10,23 +10,26 @@ function get2ndAnd3rd( myArray ){
   // myArray is an array of numbers
   // return an array containing the 2nd and 3rd items from myArray
   // myArray should remain unchanged
-
+return myArray.slice(1,3);
   // hint: use slice
 }
 
 function stringify( myArray ){
+  return myArray.map(item => item.toString());
   // myArray is an array of numbers
   // return a new array which has all items converted to strings
   // myArray should remain unchanged
 }
 
 function types(input){
+  return input.map(item => item===null?"null":typeof item);
   // input is an array of items of all types
   // return an array which contains the
   // type of each of the items in input array
 }
 
 function wordLengths( words ){
+  return words.map(item => item.length);
   // words is an array of strings
   // return a new array that contains the number of letters in each word
   // for example
@@ -37,6 +40,7 @@ function wordLengths( words ){
 }
 
 function cities( capitals, formatter ){
+  return capitals.map(item => formatter(item));
   // capitals is an array of objects that have a city and country property
   // for example
   // {
@@ -51,47 +55,57 @@ function cities( capitals, formatter ){
 }
 
 function largerThanTen( numbers ){
+  return numbers.filter(item => item > 10);
+
   // numbers is an array of numbers
   // return a new array that contains only numbers
   // from the input array which are greater than 10
 }
 
 function even( numbers ){
+  return numbers.filter(item => item % 2 === 0);
   // numbers is an array of numbers
   // return a new array that contains only even numbers from the input array
 }
 
 function findTheNeedle( words ){
+  return words.indexOf("needle");
   // words is an array of words
   // return the index of the word 'needle'
 }
 
 function findLargest( numbers ){
+  return Math.max(...numbers);
   // numbers is an array of numbers
   // return the largest number from that array
 }
 
 function addAllnumbers( numbers ) {
+  return numbers.reduce(function(acc,item) {return acc + item} ,0);
   // numbers is an array of numbers
   // return the sum of all the numbers in the array
 }
 
 function sortingStrings(strings){
+  return strings.sort();
   // strings is an array of strings
   // sort them in alphabetical order and return the sorted array
 }
 
 function sortingNumbers(numbers){
+return numbers.sort((a,b) => a - b);
   // numbers is an array of numbers
   // sort them in ascending order and return the sorted array
 }
 
 function sortingNumbersDescending(numbers){
+  return numbers.sort((a,b) => b - a);
   // numbers is an array of numbers
   // sort them in descending order and return the sorted array
 }
 
 function sortingCars(cars){
+  return cars.sort((a,b) => a.year - b.year);
   // a car object has a make, model, year. For example
   // const car = {
   //   make: 'Ford',
@@ -104,6 +118,8 @@ function sortingCars(cars){
 }
 
 function deleteColour( car ){
+ delete car.colour;
+ return car;
   // car is an object with properties make, model and colour. For example
   // {
   //   make: 'Ford',
@@ -115,6 +131,20 @@ function deleteColour( car ){
 };
 
 function paintShop( cars, colour ){
+  //var newCars = Object.assign({}, cars);
+  // let newCars = cars.map(item => Object.assign({}, item))
+
+  return cars.map(function(item) {
+    if (item.make==="Ford") {
+      return Object.assign({},item, {colour});
+    }
+    return item;
+  
+  })
+    
+
+  console.log("END");
+
   // cars is an array of objects that have
   // their properties are `make`, `model` and `colour`
 
@@ -133,6 +163,12 @@ function paintShop( cars, colour ){
 }
 
 function secondLargest( numbers ){
+  
+  const numbersClone = numbers.slice(0);
+  const sorted = numbersClone.sort((a,b) => b - a);
+  const secondLargest = sorted[1];
+  return numbers.indexOf(secondLargest);
+  
   // numbers is an array of numbers
   // return the index of the second
   // largest number in the array
