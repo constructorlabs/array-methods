@@ -192,6 +192,13 @@ function addSales( city, sales ){
   // property and save the sales figure as its value.
 
   // return the updated globalSales object
+  if (globalSales.hasOwnProperty(city)) {
+    globalSales[city] += sales;
+  } else {
+    globalSales[city] = sales;
+  }
+
+  return globalSales;
 }
 
 function totalSales( sales ){
@@ -200,9 +207,15 @@ function totalSales( sales ){
   // and return the total.
 
   // Hint: look up how to get the values of an object
+  const salesArray = Object.values(sales);
+  console.log(salesArray);
+  return salesArray.reduce(function(acc,item){return acc + item}, 0); 
 }
 
 function highestSum( input ){
+
+  const summedArrays = input.map(item => item.reduce(function(acc,i){return acc + i},0));
+  return Math.max(...summedArrays);
   // input is an array of arrays of numbers.
   // For example
   // [
@@ -229,7 +242,7 @@ function walletSum( wallet ){
   //
   // calculate the sum of money in the wallet and return
   // the total.
-
+    return (wallet[5] * 5) +  (wallet[10] * 10) + (wallet[20] * 20);
   // the denominations used in this exercise are 5, 10 and 20
 }
 
@@ -238,16 +251,78 @@ function walletMerge( wallet1, wallet2 ){
   // both wallets passed in.
 
   // the denominations used in this exercise are 5, 10 and 20
+
+
+  const fives = wallet1[5] + wallet2[5];
+  const tens = wallet1[10] + wallet2[10];
+  const twenties = wallet1[20] + wallet2[20];
+
+  return {5: fives, 10: tens, 20: twenties};
+
+
 }
 
 function arrayOfWallets( wallets ){
   // wallets is an array of wallets
 
+
+let five = 0;
+let ten = 0;
+let twenty = 0;
+
+wallets.forEach(function (wallet) {
+  five += wallet[5]; 
+  ten += wallet[10]; 
+  twenty += wallet[20]
+});
+
+return {5: five, 10: ten, 20: twenty};
+
+
+
   // Return a new wallet object containing the notes from all wallets
   // the denominations used in this exercise are 5, 10 and 20
 }
 
+
+
 function crazyMoney( wallets ){
+  let valueOfWallet = 0;
+  let notes = [];
+
+  wallets.map(function (wallet) {
+    notes=Object.keys(wallet);
+    valueOfWallet += notes.reduce((acc,note) => acc + note*wallet[note], 0);
+  });
+
+  return valueOfWallet;
+
+}  
+
+
+
+
+  // let valueOfWallet = 0;
+
+  // wallets.map(function (wallet) {
+  //   for (var note in wallet) {
+  //     valueOfWallet += note * wallet[note]
+  //   }
+  // });
+
+  // return valueOfWallet;
+
+
+
+
+  // for (var note in oneWallet) {
+  //   console.log(note * oneWallet[note]);
+  //   valueOfWallet += note * oneWallet[note]
+
+  // };
+  // console.log(valueOfWallet);
+
+
   // In previous exercises the notes denominations were
   // limited to 5, 10 and 20. We now have wallets that
   // can have notes of any denomination. Implement a function
@@ -257,7 +332,7 @@ function crazyMoney( wallets ){
   // Hint: look up how to get keys of objects. You may also need
   // to use square bracket notation to look up values which
   // correspond to those keys
-}
+
 
 /*
  * STRETCH GOALS
