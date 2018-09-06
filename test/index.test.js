@@ -273,6 +273,34 @@ test('Second largest', () => {
   expect( output ).toEqual( 2 );
 });
 
+test('Map', () => {
+  const numbers = [ 2, 7, 3];
+
+  const output = map( numbers, i => i*2 );
+
+  expect( output ).toEqual( [ 4, 14, 6] );
+});
+
+test('Filter', () => {
+  const numbers = [ 2, 7, 3];
+  const output = filter( numbers, i => i>2 );
+
+  expect( output ).toEqual( [ 7, 3] );
+});
+
+test('Find', () => {
+  const numbers = [ 2, 7, 3, 14];
+  const output = find( numbers, i => i%7===0 );
+
+  expect( output ).toEqual( 7 );
+});
+
+test('Reduce', () => {
+  const numbers = [ 2, 7, 3, 14];
+  const output = reduce( numbers, (acc, item) => acc * item, 1);
+  expect( output ).toEqual( 588 );
+});
+
 test('Add sales', () => {
   const londonx = {
     london: 250,

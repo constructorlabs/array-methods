@@ -1,4 +1,6 @@
 function removeMiddle( words ){
+  let x = (words.length-1)/2;
+  return words.splice(x,1);
   // words is an array which contains an odd number of strings
   // return a new array containing only the middle word
   // the words array should no longer contain the middle word
@@ -6,7 +8,9 @@ function removeMiddle( words ){
   // hint: use splice
 }
 
+
 function get2ndAnd3rd( myArray ){
+  return myArray.slice(1,3);
   // myArray is an array of numbers
   // return an array containing the 2nd and 3rd items from myArray
   // myArray should remain unchanged
@@ -15,18 +19,31 @@ function get2ndAnd3rd( myArray ){
 }
 
 function stringify( myArray ){
+  const output = myArray.map(function(item){
+    return item.toString();
+  });
+  return output;
   // myArray is an array of numbers
   // return a new array which has all items converted to strings
   // myArray should remain unchanged
 }
 
 function types(input){
+  return input.map(item => {
+    if (item === null) {return "null";}
+    else {return typeof item};
+  });
+  }
+
   // input is an array of items of all types
   // return an array which contains the
   // type of each of the items in input array
-}
+
 
 function wordLengths( words ){
+  return words.map(function(item){
+    return item.length;
+  })
   // words is an array of strings
   // return a new array that contains the number of letters in each word
   // for example
@@ -37,6 +54,8 @@ function wordLengths( words ){
 }
 
 function cities( capitals, formatter ){
+  return capitals.map(formatter);
+
   // capitals is an array of objects that have a city and country property
   // for example
   // {
@@ -51,47 +70,57 @@ function cities( capitals, formatter ){
 }
 
 function largerThanTen( numbers ){
+  return numbers.filter(i => i > 10);
   // numbers is an array of numbers
   // return a new array that contains only numbers
   // from the input array which are greater than 10
 }
 
 function even( numbers ){
+  return numbers.filter(i => i % 2 === 0);
   // numbers is an array of numbers
   // return a new array that contains only even numbers from the input array
 }
 
 function findTheNeedle( words ){
+  return words.findIndex(item => item === "needle");
+  }
   // words is an array of words
   // return the index of the word 'needle'
-}
+
 
 function findLargest( numbers ){
+  return numbers.sort((a,b)=>(b-a))[0];
   // numbers is an array of numbers
   // return the largest number from that array
 }
 
 function addAllnumbers( numbers ) {
+  return numbers.reduce((a,b)=>(a+b));
   // numbers is an array of numbers
   // return the sum of all the numbers in the array
 }
 
 function sortingStrings(strings){
+  return strings.sort();
   // strings is an array of strings
   // sort them in alphabetical order and return the sorted array
 }
 
 function sortingNumbers(numbers){
+  return numbers.sort((a,b)=>(a-b));
   // numbers is an array of numbers
   // sort them in ascending order and return the sorted array
 }
 
 function sortingNumbersDescending(numbers){
+  return numbers.sort((a,b)=>(b-a));
   // numbers is an array of numbers
   // sort them in descending order and return the sorted array
 }
 
 function sortingCars(cars){
+  return cars.sort((a,b)=>(a.year-b.year));
   // a car object has a make, model, year. For example
   // const car = {
   //   make: 'Ford',
@@ -104,6 +133,8 @@ function sortingCars(cars){
 }
 
 function deleteColour( car ){
+  delete car.colour;
+  return car;
   // car is an object with properties make, model and colour. For example
   // {
   //   make: 'Ford',
@@ -115,6 +146,14 @@ function deleteColour( car ){
 };
 
 function paintShop( cars, colour ){
+  return cars.map(item => {
+    let copy = Object.assign({}, item);
+    if (copy.make === "Ford") {
+      copy.colour = colour;
+    };
+    return copy;
+});
+
   // cars is an array of objects that have
   // their properties are `make`, `model` and `colour`
 
@@ -133,6 +172,11 @@ function paintShop( cars, colour ){
 }
 
 function secondLargest( numbers ){
+  const x = numbers.slice(0);
+  const y = x.sort((a,b)=>(b-a))[1];
+  return numbers.findIndex(item => item === y);
+
+
   // numbers is an array of numbers
   // return the index of the second
   // largest number in the array
@@ -151,6 +195,14 @@ function addSales( city, sales ){
     madrid: 400
   };
 
+  if (globalSales.hasOwnProperty(city)) {
+    globalSales[city] += sales;
+  }
+  else {
+    globalSales[city] = sales;
+  }
+  return globalSales;
+
   // If city already exists in object, add sales figure
   // to its total. If city does not exist, create a new
   // property and save the sales figure as its value.
@@ -159,6 +211,11 @@ function addSales( city, sales ){
 }
 
 function totalSales( sales ){
+  let sum = 0;
+  for (item in sales) {
+    sum += sales[item];
+  }
+  return sum;
   // You are passed a sales object similar to the one
   // in the previous exercise. Add up all the sales figures
   // and return the total.
@@ -167,6 +224,7 @@ function totalSales( sales ){
 }
 
 function highestSum( input ){
+  return input.map(item => item.reduce((a,b)=>(a+b),0)).sort((a,b)=>(b-a))[0];
   // input is an array of arrays of numbers.
   // For example
   // [
@@ -195,9 +253,30 @@ function walletSum( wallet ){
   // the total.
 
   // the denominations used in this exercise are 5, 10 and 20
+  let total = 0;
+  for (denom in wallet) {
+    total += denom*wallet[denom];
+  }
+  return total;
 }
 
 function walletMerge( wallet1, wallet2 ){
+
+  const wallet = {
+    5: 0,
+    10: 0,
+    20:0
+  }
+
+  for (denom in wallet1) {
+    wallet[denom] += wallet1[denom];
+  }
+
+  for (denom in wallet2) {
+    wallet[denom] += wallet2[denom];
+  }
+
+  return wallet;
   // return a new wallet object containing the contents of
   // both wallets passed in.
 
@@ -206,12 +285,39 @@ function walletMerge( wallet1, wallet2 ){
 
 function arrayOfWallets( wallets ){
   // wallets is an array of wallets
-
+  const wallet = {
+    5: 0,
+    10: 0,
+    20:0
+  }
+  wallets.forEach(function(item){
+    for (denom in item) {
+      wallet[denom] += item[denom];
+    }
+  });
+  return wallet;
   // Return a new wallet object containing the notes from all wallets
   // the denominations used in this exercise are 5, 10 and 20
 }
 
 function crazyMoney( wallets ){
+  let sum = 0;
+  wallets.forEach(function(item){
+    for (denom in item) {
+      sum += item[denom]*denom;}});
+  return sum;
+}
+/*
+  wallets.forEach(function(item){
+    for (denom in item) {
+      if (wallet.hasOwnProperty(denom)) {
+      wallet[denom] += item[denom];
+      }
+      else wallet[denom] = item[denom];
+    }
+  }); */
+
+
   // In previous exercises the notes denominations were
   // limited to 5, 10 and 20. We now have wallets that
   // can have notes of any denomination. Implement a function
@@ -221,13 +327,20 @@ function crazyMoney( wallets ){
   // Hint: look up how to get keys of objects. You may also need
   // to use square bracket notation to look up values which
   // correspond to those keys
-}
+
 
 /*
  * STRETCH GOALS
  */
 
 function map(array, callback){
+  let newArr = [];
+  for (let i = 0; i < array.length; i++) {
+    newArr[i] = callback(array[i]);
+  }
+  return newArr;
+
+
   // Implement a map function which accepts an array of items and a callback function
   // It should call the callback with each item from the array
   // and return a new array that contains the output of each callback
@@ -239,6 +352,14 @@ function map(array, callback){
 }
 
 function filter(array, callback){
+  let newArr = [];
+  for (let i = 0; i < array.length; i++) {
+    if (callback(array[i])) {
+      newArr.push(array[i]);
+    }
+  }
+  return newArr;
+
   // Implement a filter function which accepts an array of items and a callback function
   // It should call the callback with each item from the array
   // and return a new array that the items from the array for which the
@@ -251,6 +372,12 @@ function filter(array, callback){
 }
 
 function find(array, callback){
+  for (let i = 0; i < array.length; i++) {
+    if (callback(array[i])) {
+      return array[i];
+    }
+  }
+
   // Implement a find function which accepts an array of items and a callback function
   // It should return the first item from the array for which
   // the callback returns a truthy value
@@ -262,6 +389,10 @@ function find(array, callback){
 }
 
 function reduce(array, reducer, initialAcc){
+  for (let i = 0; i < array.length; i++) {
+    initialAcc = reducer(array[i],initialAcc);
+  }
+  return initialAcc;
   // Implement a reduce function which accepts an array of items, a reducer function
   // and an initial value of the acc.
   // It should return the last value that was output by the reducer.
